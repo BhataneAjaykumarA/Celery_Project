@@ -1,0 +1,33 @@
+-create django project
+> django-admin startproject celery_pro .
+
+-create app
+> python manage.py startapp task1
+
+-install celery
+> pip install celery
+
+-app level create tasks.py file
+> tasks.py
+
+-Enable rabbitmq-server
+>sudo systemctl enable rabbitmq-server
+
+-Start rabbitmq-server
+>sudo systemctl start rabbitmq-server
+
+-Status rabbitmq-server
+>systemctl status rabbitmq-server
+
+-celery worker
+>celery -A celery_pro worker -l info
+
+
+--------
+python manage.py shell
+
+from task1.tasks import add
+
+add.delay(10,10)
+
+add.apply_async((3,3),countdown=10)
