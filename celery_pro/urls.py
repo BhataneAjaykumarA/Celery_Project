@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('pro/',include('task2.urls',)),
     path('pro/',include('task3.urls')),
+    path('pro/', include('send_mail_app.urls')),
 ]
 
