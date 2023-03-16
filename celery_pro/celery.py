@@ -31,11 +31,19 @@ app.conf.update(timezone = 'Aisa/Kolkata')                          # set indian
 
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
-# Celery Beat Settings
-app.conf.beat_schedule = {}
 
 app.autodiscover_tasks()
 
 @app.task(bind=True)
 def debug_task(self):
     print(f'Request: {self.request!r}')
+
+## ----------------------- Celery Beat Settings --- for that start celery beat server -- celery -A <project_name> beat -l info
+from celery.schedules import crontab                    # for scheduling task
+app.conf.beat_schedule = {
+    'send-mail-every-day-at-7-03':{                     # name
+        'task':'send_mail_app.tasks.send_mail_func',    # add function name to execute on that time
+        'schedule': crontab(hour=19, minute=3),         # add schedule time to execute celery beat and send to celery worker
+    }
+
+}
